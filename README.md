@@ -32,3 +32,15 @@ void loop() {
   }
 }
 ```
+
+ตัวอย่างค่าที่อ่านได้ (แสดงผลใน Serial Monitor)
+
+```
+Raw= 6405   Current=4.00 mA
+Raw= 6407   Current=4.00 mA
+Raw= 6406   Current=4.00 mA
+Raw= 6407   Current=4.00 mA
+Raw= 6408   Current=4.00 mA
+Raw= 6408   Current=4.00 mA
+Raw= 6407   Current=4.00 mA
+```
