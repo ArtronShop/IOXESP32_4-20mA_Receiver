@@ -91,8 +91,16 @@ float Receiver4_20::current() {
         }
     }
 
-    if (raw <= rawPts[0]) return mAPts[0];
-    if (raw >= rawPts[n - 1]) return mAPts[n - 1];
+    // Interpolate between (raw=0, 0mA) and first calibration point
+    if (raw < rawPts[0]) {
+        return (float)raw / rawPts[0] * mAPts[0];
+    }
+
+    // Extrapolate above last point using last segment slope
+    if (raw > rawPts[n - 1]) {
+        float t = (float)(raw - rawPts[n - 2]) / (rawPts[n - 1] - rawPts[n - 2]);
+        return mAPts[n - 2] + t * (mAPts[n - 1] - mAPts[n - 2]);
+    }
 
     for (int i = 0; i < n - 1; i++) {
         if (raw <= rawPts[i + 1]) {
@@ -101,5 +109,5 @@ float Receiver4_20::current() {
         }
     }
 
-    return mAPts[0];
+    return mAPts[n - 1];
 }
