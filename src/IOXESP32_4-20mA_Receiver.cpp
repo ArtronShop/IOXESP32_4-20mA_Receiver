@@ -20,7 +20,7 @@ Receiver4_20::Receiver4_20(TwoWire* wire, uint8_t addr) : _wire(wire), _addr(add
 bool Receiver4_20::writeReg(uint8_t addr, uint16_t* data) {
     Wire.beginTransmission(this->_addr);
     Wire.write(addr);
-    Wire.write((*data >> 16) & 0xFF);
+    Wire.write((*data >> 8) & 0xFF);
     Wire.write(*data & 0xFF);
     int error = Wire.endTransmission();
     return error == 0;
@@ -60,7 +60,7 @@ bool Receiver4_20::begin(int16_t _4mA_raw_value, int16_t _20mA_raw_value,
     configs.MODE = 0b101;    // Shunt Voltage, Continuous
     configs.VSHCT = 0b100;   // 1.1 ms
     configs.VBUSCT = 0b100;  // 1.1 ms
-    configs.AVG = 0b000;     // 1
+    configs.AVG = 0b011;     // 64 samples
     return writeReg(0x00, (uint16_t*)&configs);
 }
 
